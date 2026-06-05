@@ -1,43 +1,146 @@
 # Permutaciones_Combinaciones
-Bono de programación – Matemáticas Discretas I – Calculadora de permutaciones y combinaciones
+Bono de programacion - Matematicas Discretas I
 
-**Autor:** [Sebastian Alexis Arévalo Grande]  
-**Problemas escogidos:** 1 (Permutaciones) y 2 (Combinaciones)
+Repositorio preparado para los dos primeros problemas del PDF:
 
-## Instrucciones de ejecución
+1. Permutaciones generales y k-permutaciones.
+2. Combinaciones generales y triangulo de Pascal.
 
-1. Asegúrate de tener Python 3.8+ instalado.
-2. Clona el repositorio o descarga los archivos.
-3. Ejecuta cada programa por separado:
-   ```bash
-   python Permutaciones.py
-   python Combinaciones.py
+## Idea del proyecto
 
-4. Para ejecutar las pruebas:
-   ```bash
-   python -m pytest pruebas/ 
-   # o ejecuta cada archivo de prueba directamente
-   python pruebas/test_permutaciones.py
-   python pruebas/test_combinaciones.py
+El objetivo es convertir dos modelos de conteo en herramientas reutilizables y faciles de ejecutar. El usuario puede abrir un menu interactivo, elegir si quiere trabajar con permutaciones o combinaciones, ingresar sus valores y obtener el resultado con validaciones, procedimiento y ejemplos.
 
-Explicación breve de los problemas
-Problema 1 – Calculadora de permutaciones
-Permite calcular el número de formas de ordenar r objetos tomados de un total de n objetos distintos.
-Fórmula: P(n,r) = n! / (n-r)!
-Funciones: permutaciones(n, r, mostrar_procedimiento), calcular_factorial(n, metodo).
+## Punto de entrada
 
-Problema 2 – Calculadora de combinaciones
-Calcula el número de subconjuntos de tamaño r de un conjunto de n elementos.
-Fórmula: C(n,r) = n! / (r! (n-r)!)
-Propiedades: Simetría, generación del triángulo de Pascal.
-Funciones: combinaciones(n, r), fila_pascal(n), triangulo_pascal(hasta_n).
+- `main.py`: menu interactivo principal.
+- `Permutaciones.py`: funciones para factorial y permutaciones.
+- `Combinaciones.py`: funciones para combinaciones, simetria y Pascal.
 
-Ejemplos de entrada y salida
+## Como ejecutar
 
-Permutaciones
-   ```bash
-    P(10,3) = 10 × 9 × 8 = 720
-   P(20,5) = 20 × 19 × 18 × 17 × 16 = 1860480
+### Menu interactivo
 
+```bash
+py main.py
+```
 
-   
+### Ejecucion directa por problema
+
+```bash
+py Permutaciones.py
+py Combinaciones.py
+```
+
+## Estructura del menu
+
+- `1. Permutaciones`
+  - calcular factorial
+  - calcular `P(n, r)`
+  - comparar los ejemplos `P(10,3)` y `P(20,5)`
+- `2. Combinaciones`
+  - calcular `C(n, r)`
+  - ver el procedimiento de calculo
+  - verificar simetria `C(n, r) = C(n, n-r)`
+  - generar una fila de Pascal
+  - generar el triangulo de Pascal hasta una fila dada
+- `0. Salir`
+
+## Problema 1: Permutaciones
+
+### Descripcion matematica
+
+Se cuenta el numero de formas de ordenar `r` objetos distintos tomados de un total de `n` objetos distintos, sin repetir y considerando el orden.
+
+### Formula usada
+
+`P(n, r) = n! / (n-r)!`
+
+### Algoritmo
+
+El programa no calcula factoriales completos para la permutacion. En su lugar multiplica `r` terminos consecutivos desde `n` hacia abajo, lo que produce el mismo resultado con menos trabajo.
+
+### Casos especiales
+
+- `r = 0` devuelve `1`.
+- `r = n` devuelve `n!`.
+- `n` o `r` negativos generan error.
+- entradas no enteras generan error.
+- si `r > n`, el programa informa que la entrada no es valida.
+
+### Eficiencia
+
+- Tiempo: `O(r)`
+- Espacio: `O(1)`
+
+### Ejemplos incluidos
+
+- `P(5,2) = 20`
+- `P(10,10) = 3628800`
+- `P(20,5) = 1860480`
+
+## Problema 2: Combinaciones
+
+### Descripcion matematica
+
+Se cuenta el numero de subconjuntos de tamano `r` que pueden elegirse desde un conjunto de `n` elementos, sin importar el orden.
+
+### Formula usada
+
+`C(n, r) = n! / (r!(n-r)!)`
+
+### Algoritmo
+
+El programa usa la simetria `C(n, r) = C(n, n-r)` para reducir el trabajo y luego calcula el valor con un producto entero estable. Adicionalmente, puede mostrar el procedimiento de calculo, generar la fila de Pascal y dibujar el triangulo completo centrado.
+
+### Casos especiales
+
+- `r = 0` devuelve `1`.
+- `r = n` devuelve `1`.
+- `r > n` genera error.
+- `n` o `r` negativos generan error.
+- entradas no enteras generan error.
+
+### Eficiencia
+
+- Tiempo: `O(min(r, n-r))`
+- Espacio: `O(1)`
+
+### Ejemplos incluidos
+
+- `C(5,2) = 10`
+- `C(8,4) = 70`
+- `C(4,0) = 1`
+- Fila 4 de Pascal: `[1, 4, 6, 4, 1]`
+- Triangulo de Pascal centrado para lectura visual.
+
+## Pruebas y validacion
+
+Las pruebas incluidas cubren:
+
+- al menos cinco casos de permutaciones;
+- al menos cinco casos de combinaciones;
+- validacion de entradas negativas, no enteras y casos donde `r > n`;
+- verificacion de la simetria de las combinaciones;
+- construccion de la fila y del triangulo de Pascal;
+- verificacion del procedimiento mostrado en combinaciones.
+
+## Archivos de apoyo
+
+- `problema1_permutaciones.py`
+- `problema2_combinaciones.py`
+- `Pruebas/test_permutaciones.py`
+- `Pruebas/test_combinaciones.py`
+
+## Resultado de la entrega
+
+Este repositorio cumple con lo pedido para los dos primeros ejercicios del documento:
+
+- explicacion breve del problema;
+- formula o principio combinatorio;
+- algoritmo implementado;
+- codigo funcional;
+- pruebas con varios valores;
+- validacion de casos especiales;
+- comentario de eficiencia;
+- menu interactivo para uso directo;
+- presentacion mas dinamica y explicativa.
