@@ -4,15 +4,22 @@ from time import sleep
 
 from Combinaciones import (
     combinaciones,
+    demostrar_identidad_simetria,
     fila_pascal,
+    mostrar_pruebas_combinaciones,
     mostrar_triangulo_pascal,
     verificar_simetria,
 )
-from Permutaciones import calcular_factorial, permutaciones
+from Permutaciones import (
+    calcular_factorial,
+    mostrar_comparacion_factoriales,
+    mostrar_pruebas_permutaciones,
+    permutaciones,
+)
 
 
-def _escribir(texto, salto=True, demora=0.006):
-    for caracter in texto:
+def _escribir(texto, salto=True, demora=0.002):
+    for caracter in str(texto):
         print(caracter, end="", flush=True)
         sleep(demora)
     if salto:
@@ -47,13 +54,12 @@ def _leer_entero(mensaje):
         try:
             return int(texto)
         except ValueError:
-            print("La entrada no es valida. Debes escribir un numero entero.")
+            _escribir("La entrada no es valida. Debes escribir un numero entero.")
 
 
 def _leer_si_no(mensaje, por_defecto=False):
-    opciones = " [s/n]: "
     while True:
-        texto = _leer_texto(mensaje + opciones)
+        texto = _leer_texto(f"{mensaje} [s/n]: ")
         if texto is None:
             return por_defecto
         respuesta = texto.strip().lower()
@@ -63,7 +69,16 @@ def _leer_si_no(mensaje, por_defecto=False):
             return True
         if respuesta in {"n", "no"}:
             return False
-        print("Respuesta no valida. Escribe s para si o n para no.")
+        _escribir("Respuesta no valida. Escribe s para si o n para no.")
+
+
+def _mostrar_pruebas_generales():
+    _escribir("=== Pruebas y casos especiales ===")
+    _escribir("Permutaciones:")
+    mostrar_pruebas_permutaciones()
+    _escribir("Combinaciones:")
+    mostrar_pruebas_combinaciones()
+    _pausa()
 
 
 def _menu_factorial():
@@ -78,14 +93,14 @@ def _menu_factorial():
         )
         opcion = _leer_texto("Elige una opcion [0-2]: ")
         if opcion is None:
-            print("\nEntrada finalizada. Regresando al menu principal.")
+            _escribir("Entrada finalizada. Regresando al menu principal.")
             return
         opcion = opcion.strip()
 
         if opcion == "0":
             return
         if opcion not in {"1", "2"}:
-            print(
+            _escribir(
                 "Esa opcion no existe. Debes elegir 1 para iterativo, 2 para recursivo o 0 para volver."
             )
             continue
@@ -93,14 +108,14 @@ def _menu_factorial():
         metodo = "iterativo" if opcion == "1" else "recursivo"
         n = _leer_entero("Ingresa n: ")
         if n is None:
-            print("Entrada finalizada. Regresando al menu anterior.")
+            _escribir("Entrada finalizada. Regresando al menu anterior.")
             return
         try:
             resultado = calcular_factorial(n, metodo)
-            print(f"Listo. El valor de {n}! usando metodo {metodo} es {resultado}.")
-            print("Este calculo respeta la definicion matematica de factorial.")
+            _escribir(f"Listo. El valor de {n}! usando metodo {metodo} es {resultado}.")
+            _escribir("Este calculo respeta la definicion matematica de factorial.")
         except Exception as error:
-            print(f"No fue posible calcular el factorial: {error}")
+            _escribir(f"No fue posible calcular el factorial: {error}")
         _pausa()
 
 
@@ -111,13 +126,15 @@ def _menu_permutaciones():
                 "=== Permutaciones ===",
                 "1. Calcular factorial",
                 "2. Calcular P(n, r)",
-                "3. Comparar ejemplos",
+                "3. Comparar dos casos",
+                "4. Comparar factorial iterativo y recursivo",
+                "5. Ver pruebas y casos especiales",
                 "0. Volver",
             ]
         )
         opcion = _leer_texto("Elige una opcion: ")
         if opcion is None:
-            print("\nEntrada finalizada. Regresando al menu principal.")
+            _escribir("Entrada finalizada. Regresando al menu principal.")
             return
         opcion = opcion.strip()
 
@@ -129,29 +146,71 @@ def _menu_permutaciones():
         if opcion == "2":
             n = _leer_entero("Ingresa n: ")
             if n is None:
-                print("Entrada finalizada. Regresando al menu anterior.")
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
                 return
             r = _leer_entero("Ingresa r: ")
             if r is None:
-                print("Entrada finalizada. Regresando al menu anterior.")
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
                 return
             mostrar = _leer_si_no("Deseas ver el procedimiento?", True)
             try:
                 resultado = permutaciones(n, r, mostrar_procedimiento=mostrar)
-                print(f"Resultado final: P({n}, {r}) = {resultado}.")
-                print("Interpretacion: se cuentan las formas de ordenar r objetos distintos tomados de n.")
+                _escribir(f"Resultado final: P({n}, {r}) = {resultado}.")
+                _escribir("Interpretacion: se cuentan las formas de ordenar r objetos distintos tomados de n.")
             except Exception as error:
-                print(f"No fue posible calcular la permutacion: {error}")
+                _escribir(f"No fue posible calcular la permutacion: {error}")
             _pausa()
             continue
         if opcion == "3":
-            print("Vamos a comparar dos casos de referencia del documento:")
-            print(f"P(10, 3) = {permutaciones(10, 3)}")
-            print(f"P(20, 5) = {permutaciones(20, 5)}")
-            print("Ambos ejemplos muestran que el programa trabaja con valores generales, no con un caso fijo.")
+            _escribir("Vamos a comparar dos casos de permutaciones.")
+            n1 = _leer_entero("Ingresa el primer n: ")
+            if n1 is None:
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
+                return
+            r1 = _leer_entero("Ingresa el primer r: ")
+            if r1 is None:
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
+                return
+            n2 = _leer_entero("Ingresa el segundo n: ")
+            if n2 is None:
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
+                return
+            r2 = _leer_entero("Ingresa el segundo r: ")
+            if r2 is None:
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
+                return
+            try:
+                resultado1 = permutaciones(n1, r1)
+                resultado2 = permutaciones(n2, r2)
+                _escribir(f"Primer caso: P({n1}, {r1}) = {resultado1}")
+                _escribir(f"Segundo caso: P({n2}, {r2}) = {resultado2}")
+                if resultado1 > resultado2:
+                    _escribir("El primer caso produce mas permutaciones.")
+                elif resultado1 < resultado2:
+                    _escribir("El segundo caso produce mas permutaciones.")
+                else:
+                    _escribir("Ambos casos producen la misma cantidad de permutaciones.")
+            except Exception as error:
+                _escribir(f"No fue posible comparar los casos: {error}")
             _pausa()
             continue
-        print("Esa opcion no existe. El menu solo acepta 0, 1, 2 o 3.")
+        if opcion == "4":
+            n = _leer_entero("Ingresa n para comparar factoriales: ")
+            if n is None:
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
+                return
+            try:
+                mostrar_comparacion_factoriales(n)
+            except Exception as error:
+                _escribir(f"No fue posible comparar factoriales: {error}")
+            _pausa()
+            continue
+        if opcion == "5":
+            _escribir("Mostrando pruebas y casos especiales de permutaciones...")
+            mostrar_pruebas_permutaciones()
+            _pausa()
+            continue
+        _escribir("Esa opcion no existe. El menu solo acepta 0, 1, 2, 3, 4 o 5.")
 
 
 def _menu_combinaciones():
@@ -163,12 +222,13 @@ def _menu_combinaciones():
                 "2. Verificar simetria",
                 "3. Generar fila de Pascal",
                 "4. Generar triangulo de Pascal",
+                "5. Ver pruebas y casos especiales",
                 "0. Volver",
             ]
         )
         opcion = _leer_texto("Elige una opcion: ")
         if opcion is None:
-            print("\nEntrada finalizada. Regresando al menu principal.")
+            _escribir("Entrada finalizada. Regresando al menu principal.")
             return
         opcion = opcion.strip()
 
@@ -177,69 +237,77 @@ def _menu_combinaciones():
         if opcion == "1":
             n = _leer_entero("Ingresa n: ")
             if n is None:
-                print("Entrada finalizada. Regresando al menu anterior.")
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
                 return
             r = _leer_entero("Ingresa r: ")
             if r is None:
-                print("Entrada finalizada. Regresando al menu anterior.")
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
                 return
             mostrar = _leer_si_no("Deseas ver el procedimiento?", True)
             try:
                 resultado = combinaciones(n, r, mostrar_procedimiento=mostrar)
-                print(f"Resultado final: C({n}, {r}) = {resultado}.")
-                print("Interpretacion: se cuentan subconjuntos de tamano r sin importar el orden.")
+                _escribir(f"Resultado final: C({n}, {r}) = {resultado}.")
+                _escribir("Interpretacion: se cuentan subconjuntos de tamano r sin importar el orden.")
+                demostrar = _leer_si_no("Deseas la demostracion detallada de la identidad C(n, r) = C(n, n-r)?", False)
+                if demostrar:
+                    demostrar_identidad_simetria(n, r)
             except Exception as error:
-                print(f"No fue posible calcular la combinacion: {error}")
+                _escribir(f"No fue posible calcular la combinacion: {error}")
             _pausa()
             continue
         if opcion == "2":
             n = _leer_entero("Ingresa n: ")
             if n is None:
-                print("Entrada finalizada. Regresando al menu anterior.")
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
                 return
             r = _leer_entero("Ingresa r: ")
             if r is None:
-                print("Entrada finalizada. Regresando al menu anterior.")
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
                 return
             try:
                 if verificar_simetria(n, r):
-                    print(
+                    _escribir(
                         f"La simetria se cumple: C({n}, {r}) es igual a C({n}, {n-r}), como predice la teoria."
                     )
                 else:
-                    print(
+                    _escribir(
                         f"Algo no coincide: C({n}, {r}) no resulta igual a C({n}, {n-r}). Revisa la entrada."
                     )
             except Exception as error:
-                print(f"No fue posible verificar la simetria: {error}")
+                _escribir(f"No fue posible verificar la simetria: {error}")
             _pausa()
             continue
         if opcion == "3":
             n = _leer_entero("Ingresa la fila n: ")
             if n is None:
-                print("Entrada finalizada. Regresando al menu anterior.")
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
                 return
             try:
                 fila = fila_pascal(n)
-                print(f"Fila {n} de Pascal: {fila}")
-                print("Cada fila resume los coeficientes binomiales de una potencia binomial.")
+                _escribir(f"Fila {n} de Pascal: {fila}")
+                _escribir("Cada fila resume los coeficientes binomiales de una potencia binomial.")
             except Exception as error:
-                print(f"No fue posible generar la fila de Pascal: {error}")
+                _escribir(f"No fue posible generar la fila de Pascal: {error}")
             _pausa()
             continue
         if opcion == "4":
             n = _leer_entero("Generar hasta la fila: ")
             if n is None:
-                print("Entrada finalizada. Regresando al menu anterior.")
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
                 return
             try:
                 mostrar_triangulo_pascal(n)
-                print("El triangulo se imprime centrado para resaltar su forma clasica.")
+                _escribir("El triangulo se imprime centrado para resaltar su forma clasica.")
             except Exception as error:
-                print(f"No fue posible generar el triangulo de Pascal: {error}")
+                _escribir(f"No fue posible generar el triangulo de Pascal: {error}")
             _pausa()
             continue
-        print("Esa opcion no existe. El menu solo acepta 0, 1, 2, 3 o 4.")
+        if opcion == "5":
+            _escribir("Mostrando pruebas y casos especiales de combinaciones...")
+            mostrar_pruebas_combinaciones()
+            _pausa()
+            continue
+        _escribir("Esa opcion no existe. El menu solo acepta 0, 1, 2, 3, 4 o 5.")
 
 
 def main():
@@ -249,17 +317,18 @@ def main():
                 "=== Bono de Matematicas Discretas ===",
                 "1. Permutaciones",
                 "2. Combinaciones",
+                "3. Pruebas y casos especiales",
                 "0. Salir",
             ]
         )
         opcion = _leer_texto("Elige una opcion: ")
         if opcion is None:
-            print("\nEntrada finalizada. Saliendo del programa.")
+            _escribir("Entrada finalizada. Saliendo del programa.")
             return
         opcion = opcion.strip()
 
         if opcion == "0":
-            print("Fin del programa. Gracias por usar la calculadora.")
+            _escribir("Fin del programa. Gracias por usar la calculadora.")
             return
         if opcion == "1":
             _menu_permutaciones()
@@ -267,7 +336,10 @@ def main():
         if opcion == "2":
             _menu_combinaciones()
             continue
-        print("Esa opcion no existe. Elige 0, 1 o 2.")
+        if opcion == "3":
+            _mostrar_pruebas_generales()
+            continue
+        _escribir("Esa opcion no existe. Elige 0, 1, 2 o 3.")
 
 
 if __name__ == "__main__":

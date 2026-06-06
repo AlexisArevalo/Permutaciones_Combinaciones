@@ -13,8 +13,8 @@ El objetivo es convertir dos modelos de conteo en herramientas reutilizables y f
 ## Punto de entrada
 
 - `main.py`: menu interactivo principal.
-- `Permutaciones.py`: funciones para factorial y permutaciones.
-- `Combinaciones.py`: funciones para combinaciones, simetria y Pascal.
+- `Permutaciones.py`: funciones para factorial, permutaciones y pruebas.
+- `Combinaciones.py`: funciones para combinaciones, simetria, Pascal y pruebas.
 
 ## Como ejecutar
 
@@ -36,13 +36,17 @@ py Combinaciones.py
 - `1. Permutaciones`
   - calcular factorial
   - calcular `P(n, r)`
-  - comparar los ejemplos `P(10,3)` y `P(20,5)`
+  - comparar dos casos
+  - comparar factorial iterativo y recursivo
+  - ver pruebas y casos especiales
 - `2. Combinaciones`
   - calcular `C(n, r)`
   - ver el procedimiento de calculo
   - verificar simetria `C(n, r) = C(n, n-r)`
   - generar una fila de Pascal
   - generar el triangulo de Pascal hasta una fila dada
+  - ver pruebas y casos especiales
+- `3. Pruebas y casos especiales`
 - `0. Salir`
 
 ## Problema 1: Permutaciones
@@ -53,7 +57,11 @@ Se cuenta el numero de formas de ordenar `r` objetos distintos tomados de un tot
 
 ### Formula usada
 
-`P(n, r) = n! / (n-r)!`
+```text
+P(n, r) =      n!
+          -------------
+          (n - r)!
+```
 
 ### Algoritmo
 
@@ -86,7 +94,11 @@ Se cuenta el numero de subconjuntos de tamano `r` que pueden elegirse desde un c
 
 ### Formula usada
 
-`C(n, r) = n! / (r!(n-r)!)`
+```text
+C(n, r) =          n!
+          ----------------------
+          r! x (n - r)!
+```
 
 ### Algoritmo
 
@@ -122,7 +134,8 @@ Las pruebas incluidas cubren:
 - validacion de entradas negativas, no enteras y casos donde `r > n`;
 - verificacion de la simetria de las combinaciones;
 - construccion de la fila y del triangulo de Pascal;
-- verificacion del procedimiento mostrado en combinaciones.
+- verificacion del procedimiento mostrado en combinaciones;
+- demostracion detallada de la identidad `C(n, r) = C(n, n-r)`.
 
 ## Archivos de apoyo
 
