@@ -16,10 +16,16 @@ El objetivo es convertir dos modelos de conteo en herramientas reutilizables y f
 - `Permutaciones.py`: funciones para factorial, permutaciones y pruebas.
 - `Combinaciones.py`: funciones para combinaciones, simetria, Pascal y pruebas.
 
+## Requisitos
+
+- Python 3.8 o superior.
+- No se necesitan librerias externas.
+- Solo hace falta una terminal de comandos.
+
 ## Como descargar el proyecto
 
 ### Opcion 1: Git
-
+Abre una terminal en tu computador y ejecuta:
 ```bash
 git clone https://github.com/AlexisArevalo/Permutaciones_Combinaciones
 ```
@@ -37,11 +43,6 @@ cd Permutaciones_Combinaciones
 - Descomprime el archivo en una carpeta local.
 - Abre una terminal dentro de esa carpeta.
 
-## Requisitos
-
-- Python 3.8 o superior.
-- No se necesitan librerias externas.
-- Solo hace falta una terminal de comandos.
 
 ## Como ejecutar
 
