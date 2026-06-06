@@ -21,7 +21,7 @@ El objetivo es convertir dos modelos de conteo en herramientas reutilizables y f
 ### Opcion 1: Git
 
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/AlexisArevalo/Permutaciones_Combinaciones
 ```
 
 Luego entra a la carpeta del proyecto:
@@ -101,7 +101,7 @@ Se cuenta el numero de formas de ordenar `r` objetos distintos tomados de un tot
 ```text
 P(n, r) =      n!
           -------------
-          (n - r)!
+             (n - r)!
 ```
 
 ### Algoritmo
@@ -138,7 +138,7 @@ Se cuenta el numero de subconjuntos de tamano `r` que pueden elegirse desde un c
 ```text
 C(n, r) =          n!
           ----------------------
-          r! x (n - r)!
+               r! x (n - r)!
 ```
 
 ### Algoritmo
