@@ -16,12 +16,45 @@ El objetivo es convertir dos modelos de conteo en herramientas reutilizables y f
 - `Permutaciones.py`: funciones para factorial, permutaciones y pruebas.
 - `Combinaciones.py`: funciones para combinaciones, simetria, Pascal y pruebas.
 
+## Como descargar el proyecto
+
+### Opcion 1: Git
+
+```bash
+git clone <url-del-repositorio>
+```
+
+Luego entra a la carpeta del proyecto:
+
+```bash
+cd Permutaciones_Combinaciones
+```
+
+### Opcion 2: ZIP
+
+- Abre el repositorio en GitHub.
+- Descarga el proyecto como ZIP.
+- Descomprime el archivo en una carpeta local.
+- Abre una terminal dentro de esa carpeta.
+
+## Requisitos
+
+- Python 3.8 o superior.
+- No se necesitan librerias externas.
+- Solo hace falta una terminal de comandos.
+
 ## Como ejecutar
 
 ### Menu interactivo
 
 ```bash
 py main.py
+```
+
+Si `py` no funciona, usa:
+
+```bash
+python main.py
 ```
 
 ### Ejecucion directa por problema
@@ -31,10 +64,18 @@ py Permutaciones.py
 py Combinaciones.py
 ```
 
+Tambien puedes usar:
+
+```bash
+python Permutaciones.py
+python Combinaciones.py
+```
+
 ## Estructura del menu
 
 - `1. Permutaciones`
   - calcular factorial
+  - ver el proceso paso a paso del factorial
   - calcular `P(n, r)`
   - comparar dos casos
   - comparar factorial iterativo y recursivo
@@ -143,17 +184,3 @@ Las pruebas incluidas cubren:
 - `problema2_combinaciones.py`
 - `Pruebas/test_permutaciones.py`
 - `Pruebas/test_combinaciones.py`
-
-## Resultado de la entrega
-
-Este repositorio cumple con lo pedido para los dos primeros ejercicios del documento:
-
-- explicacion breve del problema;
-- formula o principio combinatorio;
-- algoritmo implementado;
-- codigo funcional;
-- pruebas con varios valores;
-- validacion de casos especiales;
-- comentario de eficiencia;
-- menu interactivo para uso directo;
-- presentacion mas dinamica y explicativa.

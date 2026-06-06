@@ -43,11 +43,61 @@ def factorial_recursivo(n):
     return n * factorial_recursivo(n - 1)
 
 
+def mostrar_proceso_factorial_iterativo(n):
+    """Muestra como se calcula n! de forma iterativa."""
+    if not isinstance(n, int):
+        raise TypeError("n debe ser un entero.")
+    if n < 0:
+        raise ValueError("El factorial no esta definido para negativos.")
+
+    _escribir(f"Proceso iterativo para {n}!:")
+    _escribir("Partimos de 1 y multiplicamos de forma descendente:")
+    resultado = 1
+    if n in (0, 1):
+        _escribir(f"{n}! = 1")
+        return 1
+
+    for i in range(1, n + 1):
+        resultado *= i
+        _escribir(f"Paso {i}: {resultado}")
+    _escribir(f"Resultado final: {n}! = {resultado}")
+    return resultado
+
+
+def mostrar_proceso_factorial_recursivo(n):
+    """Muestra como se calcula n! de forma recursiva."""
+    if not isinstance(n, int):
+        raise TypeError("n debe ser un entero.")
+    if n < 0:
+        raise ValueError("El factorial no esta definido para negativos.")
+
+    _escribir(f"Proceso recursivo para {n}!:")
+    if n in (0, 1):
+        _escribir(f"Caso base: {n}! = 1")
+        return 1
+
+    def _desplegar(k):
+        if k in (0, 1):
+            _escribir(f"Caso base: {k}! = 1")
+            return 1
+        _escribir(f"{k}! = {k} x {k - 1}!")
+        subresultado = _desplegar(k - 1)
+        resultado_local = k * subresultado
+        _escribir(f"Al volver: {k}! = {k} x {subresultado} = {resultado_local}")
+        return resultado_local
+
+    resultado = _desplegar(n)
+    _escribir(f"Resultado final: {n}! = {resultado}")
+    return resultado
+
+
 def mostrar_comparacion_factoriales(n):
     """Muestra una comparacion entre factorial iterativo y recursivo."""
-    resultado_iterativo = factorial_iterativo(n)
-    resultado_recursivo = factorial_recursivo(n)
     _escribir(f"Comparacion de factoriales para {n}!")
+    resultado_iterativo = mostrar_proceso_factorial_iterativo(n)
+    _escribir("")
+    resultado_recursivo = mostrar_proceso_factorial_recursivo(n)
+    _escribir("")
     _escribir(f"Metodo iterativo  -> {resultado_iterativo}")
     _escribir(f"Metodo recursivo  -> {resultado_recursivo}")
     if resultado_iterativo == resultado_recursivo:

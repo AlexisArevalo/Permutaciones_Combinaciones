@@ -44,7 +44,8 @@ def combinaciones(n, r, usar_factoriales=True, mostrar_procedimiento=False):
                 _escribir(
                     f"Usamos la identidad de simetria: C({n}, {original_r}) = C({n}, {r}) para reducir el trabajo."
                 )
-            _escribir(f"Formula: C({n}, {original_r}) = n! / (r!(n-r)!)")
+            _escribir("La formula combinatoria es:")
+            _escribir("C(n, r) = n! / (r! x (n-r)!)")
             _escribir(f"Reemplazando: C({n}, {original_r}) = {n}! / ({original_r}! x {n - original_r}!)")
             numerador, denominador = _formatear_procedimiento_combinacion(n, r)
             _escribir(f"Numerador expandido: {numerador}")
@@ -71,9 +72,14 @@ def demostrar_identidad_simetria(n, r):
     valor = combinaciones(n, r)
     valor_simetrico = combinaciones(n, n - r)
     _escribir(f"Queremos demostrar que C({n}, {r}) = C({n}, {n-r}).")
-    _escribir(f"Ambos valores se calculan con la misma cantidad de subconjuntos: {valor} y {valor_simetrico}.")
-    _escribir("La igualdad se cumple porque elegir r elementos deja exactamente n-r elementos sin elegir.")
-    _escribir("Por eso, escoger r elementos o escoger los n-r restantes describe la misma particion del conjunto.")
+    _escribir(f"Si elegimos {r} elementos, automaticamente quedan sin elegir {n-r} elementos.")
+    _escribir(
+        "Cada subconjunto de tamano r tiene un complemento unico de tamano n-r, asi que existe una correspondencia uno a uno."
+    )
+    _escribir(
+        "Eso significa que contar subconjuntos de tamano r o contar los complementos de tamano n-r produce el mismo numero."
+    )
+    _escribir(f"Ambos conteos dan {valor} y {valor_simetrico}.")
     _escribir(f"Conclusión: C({n}, {r}) = C({n}, {n-r}) = {valor}.")
 
 
@@ -82,9 +88,11 @@ def verificar_simetria(n, r):
     c1 = combinaciones(n, r)
     c2 = combinaciones(n, n - r)
     if c1 == c2:
-        _escribir(f"C({n}, {r}) = {c1} y C({n}, {n-r}) = {c2}. La simetria se cumple.")
+        _escribir(f"C({n}, {r}) = {c1} y C({n}, {n-r}) = {c2}.")
+        _escribir("La identidad se cumple porque ambos lados cuentan las mismas elecciones vistas por complemento.")
     else:
-        _escribir(f"C({n}, {r}) = {c1} y C({n}, {n-r}) = {c2}. La simetria no se cumple.")
+        _escribir(f"C({n}, {r}) = {c1} y C({n}, {n-r}) = {c2}.")
+        _escribir("La identidad no se cumple para estos datos, revisa la entrada.")
     return c1 == c2
 
 

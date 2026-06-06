@@ -13,6 +13,8 @@ from Combinaciones import (
 from Permutaciones import (
     calcular_factorial,
     mostrar_comparacion_factoriales,
+    mostrar_proceso_factorial_iterativo,
+    mostrar_proceso_factorial_recursivo,
     mostrar_pruebas_permutaciones,
     permutaciones,
 )
@@ -88,10 +90,11 @@ def _menu_factorial():
                 "Factorial",
                 "1. Iterativo",
                 "2. Recursivo",
+                "3. Comparar ambos procesos",
                 "0. Volver",
             ]
         )
-        opcion = _leer_texto("Elige una opcion [0-2]: ")
+        opcion = _leer_texto("Elige una opcion [0-3]: ")
         if opcion is None:
             _escribir("Entrada finalizada. Regresando al menu principal.")
             return
@@ -99,23 +102,42 @@ def _menu_factorial():
 
         if opcion == "0":
             return
-        if opcion not in {"1", "2"}:
+        if opcion not in {"1", "2", "3"}:
             _escribir(
-                "Esa opcion no existe. Debes elegir 1 para iterativo, 2 para recursivo o 0 para volver."
+                "Esa opcion no existe. Debes elegir 1 para iterativo, 2 para recursivo, 3 para comparar procesos o 0 para volver."
             )
             continue
 
-        metodo = "iterativo" if opcion == "1" else "recursivo"
-        n = _leer_entero("Ingresa n: ")
+        if opcion in {"1", "2"}:
+            metodo = "iterativo" if opcion == "1" else "recursivo"
+            n = _leer_entero("Ingresa n: ")
+            if n is None:
+                _escribir("Entrada finalizada. Regresando al menu anterior.")
+                return
+            mostrar_proceso = _leer_si_no("Deseas ver el proceso paso a paso?", True)
+            try:
+                if mostrar_proceso and metodo == "iterativo":
+                    resultado = mostrar_proceso_factorial_iterativo(n)
+                elif mostrar_proceso and metodo == "recursivo":
+                    resultado = mostrar_proceso_factorial_recursivo(n)
+                else:
+                    resultado = calcular_factorial(n, metodo)
+                    _escribir(f"Listo. El valor de {n}! usando metodo {metodo} es {resultado}.")
+                if not mostrar_proceso:
+                    _escribir("Este calculo respeta la definicion matematica de factorial.")
+            except Exception as error:
+                _escribir(f"No fue posible calcular el factorial: {error}")
+            _pausa()
+            continue
+
+        n = _leer_entero("Ingresa n para comparar ambos procesos: ")
         if n is None:
             _escribir("Entrada finalizada. Regresando al menu anterior.")
             return
         try:
-            resultado = calcular_factorial(n, metodo)
-            _escribir(f"Listo. El valor de {n}! usando metodo {metodo} es {resultado}.")
-            _escribir("Este calculo respeta la definicion matematica de factorial.")
+            mostrar_comparacion_factoriales(n)
         except Exception as error:
-            _escribir(f"No fue posible calcular el factorial: {error}")
+            _escribir(f"No fue posible comparar factoriales: {error}")
         _pausa()
 
 
